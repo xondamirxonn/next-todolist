@@ -1,12 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+interface Todo {}
 
 interface TodoState {
-  todos: Todo[];
+  todos: {
+    id: number;
+    name: string;
+  }[];
 }
 
 const initialState: TodoState = {
@@ -18,11 +17,12 @@ const todosReducer = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      return { todos: [...state.todos, action.payload] };
+      return { ...state, todos: [...state.todos, action.payload] };
     },
     del: (state, action) => {
       return {
-        todos: [...state.todos.filter((item) => item.id !== action.payload.id)],
+        ...state,
+        todos: state.todos.filter((item) => item.id !== action.payload),
       };
     },
   },
